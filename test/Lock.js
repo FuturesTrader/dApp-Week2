@@ -17,8 +17,10 @@ describe("Lock", function () {
     const unlockTime = (await time.latest()) + ONE_YEAR_IN_SECS;
 
     // Contracts are deployed using the first signer/account by default
+    // eslint-disable-next-line no-undef
     const [owner, otherAccount] = await ethers.getSigners();
 
+    // eslint-disable-next-line no-undef
     const Lock = await ethers.getContractFactory("Lock");
     const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
 
@@ -43,6 +45,7 @@ describe("Lock", function () {
         deployOneYearLockFixture
       );
 
+      // eslint-disable-next-line no-undef
       expect(await ethers.provider.getBalance(lock.target)).to.equal(
         lockedAmount
       );
@@ -51,6 +54,7 @@ describe("Lock", function () {
     it("Should fail if the unlockTime is not in the future", async function () {
       // We don't use the fixture here because we want a different deployment
       const latestTime = await time.latest();
+      // eslint-disable-next-line no-undef
       const Lock = await ethers.getContractFactory("Lock");
       await expect(Lock.deploy(latestTime, { value: 1 })).to.be.revertedWith(
         "Unlock time should be in the future"
